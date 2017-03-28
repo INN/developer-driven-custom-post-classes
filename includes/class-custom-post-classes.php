@@ -28,7 +28,7 @@ class DDCPC_Custom_Post_Classes {
 	 * @var    string
 	 * @since  0.1.1
 	 */
-	protected $key = 'developer_driven_custom_post_classes_custom_post_classes';
+	protected $key = 'developer_driven_custom_post_classes';
 
 	/**
 	 * Options page metabox ID.
@@ -36,7 +36,7 @@ class DDCPC_Custom_Post_Classes {
 	 * @var    string
 	 * @since  0.1.1
 	 */
-	protected $metabox_id = 'developer_driven_custom_post_classes_custom_post_classes_metabox';
+	protected $metabox_id = 'developer_driven_custom_post_classes_metabox';
 
 	/**
 	 * Options Page title.
@@ -78,9 +78,6 @@ class DDCPC_Custom_Post_Classes {
 		// Hook in our actions to the admin.
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
-		
-		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
-		
 	}
 
 	/**
@@ -98,59 +95,67 @@ class DDCPC_Custom_Post_Classes {
 	 * @since  0.1.1
 	 */
 	public function add_options_page() {
-		$this->options_page = add_menu_page(
+		$this->options_page = add_submenu_page(
+			'tools.php',
 			$this->title,
 			$this->title,
 			'manage_options',
 			$this->key,
 			array( $this, 'admin_page_display' )
 		);
-
-		// Include CMB CSS in the head to avoid FOUC.
-		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
 	/**
 	 * Admin page markup. Mostly handled by CMB2.
 	 *
 	 * @since  0.1.1
+	 * @uses DDCPC_Custom_Post_Classes::clean_options to sanitize the options array form the filter
 	 */
 	public function admin_page_display() {
 		?>
 		<div class="wrap cmb2-options-page <?php echo esc_attr( $this->key ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
+			<?php
+				$options = apply_filters( 'developer_driven_custom_post_classes_options', array() );
+				$options = clean_options( $options );
+				foreach ( $options as $option ) {
+					// dl of options
+					// dt for option
+					// dd for description
+					// dd of ul/li for class => description
+				}
+			?>
 		</div>
 		<?php
 	}
 
 	/**
-	 * Add custom fields to the options page.
+	 * Clean up a passed array of arrays to make sure that all arrays are valid options for this plugin
 	 *
-	 * @since  0.1.1
+	 * @param array $options
+	 * @return Array
+	 * @since 0.1.1
 	 */
-	public function add_options_page_metabox() {
+	public function clean_options( $options = array() ) {
+		foreach ( $options as $key => $option ) {
+			$option['description'] = esc_html( $option['description'] );
+			$option['name'] = esc_attr( $option['name'] );
 
-		// Add our CMB2 metabox.
-		$cmb = new_cmb2_box( array(
-			'id'         => $this->metabox_id,
-			'hookup'     => false,
-			'cmb_styles' => false,
-			'show_on'    => array(
-				// These are important, don't remove.
-				'key'   => 'options-page',
-				'value' => array( $this->key ),
-			),
-		) );
+			$clean_options = array();
+			foreach ( $option['options'] as $class => $display ) {
+				$clean_options[ esc_attr( $class ) ] = esc_html( $display );
+			}
+			$option['options'] = $clean_options;
 
-		// Add your fields here.
-		$cmb->add_field( array(
-			'name'    => __( 'Test Text', 'developer-driven-custom-post-classes' ),
-			'desc'    => __( 'field description (optional)', 'developer-driven-custom-post-classes' ),
-			'id'      => 'test_text', // No prefix needed.
-			'type'    => 'text',
-			'default' => __( 'Default Text', 'developer-driven-custom-post-classes' ),
-		) );
-
+			if (
+				empty( $option['options'] ) ||
+				empty( $option['description'] ||
+				empty( $option['name']
+			) {
+				// to do: error log of some sort for this item so that we don't get devs going WTF
+				unset( $options[$key] );
+			}
+		}
+		return $options;
 	}
 }
