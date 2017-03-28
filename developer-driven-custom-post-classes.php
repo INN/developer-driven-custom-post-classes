@@ -261,7 +261,13 @@ final class Dev_Driven_Cstm_Post_Classes {
 	 * @return boolean True if requirements are met.
 	 */
 	public function meets_requirements() {
-		var_log( has_filter( 'developer_driven_custom_post_classes_options' ) );
+		if ( ! has_filter( 'developer_driven_custom_post_classes_options' ) ) {
+			$this->activation_errors[] = sprintf(
+				__( 'The Developer-Driven Custom Post Classes plugin requires theme or plugin support to operate correctly. <a href="%1$s">Click here to find out how to set that up</a>.', 'developer_driven_custom_post_classes' ),
+				'https://github.com/INN/developer-driven-custom-post-classes/tree/master/docs/'
+			);
+			return false;
+		}
 
 		// Do checks for required classes / functions or similar.
 		// Add detailed messages to $this->activation_errors array.
