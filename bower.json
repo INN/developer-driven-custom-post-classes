@@ -1,0 +1,18 @@
+{
+  "name": "developer-driven-custom-post-classes",
+  "description": "A metabox allowing users to choose from classes defined by theme developers.",
+  "license": "GPLv2",
+  "authors": [
+    "The INN Nerds"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

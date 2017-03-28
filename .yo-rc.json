@@ -1,0 +1,19 @@
+{
+  "generator-plugin-wp": {
+    "name": "Developer-Driven Custom Post Classes",
+    "homepage": "https://nerds.inn.org/",
+    "description": "A metabox allowing users to choose from classes defined by theme developers.",
+    "version": "0.1.1",
+    "author": "The INN Nerds",
+    "authoremail": "nerds@inn.org",
+    "authorurl": "https://nerds.inn.org/",
+    "license": "GPLv2",
+    "slug": "developer-driven-custom-post-classes",
+    "classname": "Dev_Driven_Cstm_Post_Classes",
+    "mainclassname": "Dev_Driven_Cstm_Post_Classes",
+    "classprefix": "DDCPC_",
+    "prefix": "developer_driven_custom_post_classes",
+    "year": 2017,
+    "currentVersionWP": "4.7.2"
+  }
+}
