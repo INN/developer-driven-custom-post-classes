@@ -1,6 +1,6 @@
 <?php
 /**
- * Developer-Driven Custom Post Classes Custom Post Classes Tests.
+ * Developer-Driven Custom Post Classes Tests.
  *
  * @since   0.1.1
  * @package Developer_Driven_Custom_Post_Classes

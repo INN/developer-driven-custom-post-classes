@@ -1,6 +1,6 @@
 <?php
 /**
- * Developer-Driven Custom Post Classes Custom Post Classes.
+ * Developer-Driven Custom Post Classes.
  *
  * @since   0.1.1
  * @package Developer_Driven_Custom_Post_Classes
@@ -9,7 +9,7 @@
 require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';
 
 /**
- * Developer-Driven Custom Post Classes Custom Post Classes class.
+ * Developer-Driven Custom Post Classes class.
  *
  * @since 0.1.1
  */
@@ -65,7 +65,7 @@ class DDCPC_Custom_Post_Classes {
 		$this->hooks();
 
 		// Set our title.
-		$this->title = esc_attr__( 'Developer-Driven Custom Post Classes Custom Post Classes', 'developer-driven-custom-post-classes' );
+		$this->title = esc_attr__( 'Developer-Driven Custom Post Classes', 'developer-driven-custom-post-classes' );
 	}
 
 	/**
