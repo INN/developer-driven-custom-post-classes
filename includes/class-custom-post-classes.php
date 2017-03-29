@@ -31,6 +31,14 @@ class DDCPC_Custom_Post_Classes {
 	protected $key = 'developer_driven_custom_post_classes';
 
 	/**
+	 * Text domain of this plugin
+	 *
+	 * @var    string
+	 * @since  0.1.1
+	 */
+	protected $text_domain = 'developer-driven-custom-post-classes';
+
+	/**
 	 * Options page metabox ID.
 	 *
 	 * @var    string
@@ -115,10 +123,10 @@ class DDCPC_Custom_Post_Classes {
 		?>
 		<div class="wrap cmb2-options-page <?php echo esc_attr( $this->key ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<p><?php _e( 'The following are the options, choices, and respective classes that this plugin has been configured with.', '' ); ?></p>
+			<p><?php _e( 'The following are the options, choices, and respective classes that this plugin has been configured with.', $this->text_domain ); ?></p>
 			<dl>
 			<?php
-				$options = apply_filters( 'developer_driven_custom_post_classes_options', array() );
+				$orig_options = $options = apply_filters( 'developer_driven_custom_post_classes_options', array() );
 				$options = $this->clean_options( $options );
 				foreach ( $options as $option ) {
 					printf(
@@ -141,8 +149,21 @@ class DDCPC_Custom_Post_Classes {
 				}
 			?>
 			</dl>
+			<?php
+				if ( WP_DEBUG ) {
+					echo '<hr/><p>';
+					printf(
+						_e( 'This is the uncleaned version of the settings array. If an item in the uncleaned version is not appearing in the cleaned options above, please check that <a href="%1$s">the array is properly formatted</a>.', $this->text_domain ),
+						'https://github.com/INN/developer-driven-custom-post-classes/tree/master/docs'
+					);
+					echo '</p>';
+					echo '<pre><code>';
+					var_dump( $orig_options );
+					echo '</code></pre>';
+				}
+			?>
 		</div>
-		<?php
+	<?php
 	}
 
 	/**
