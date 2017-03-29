@@ -115,16 +115,32 @@ class DDCPC_Custom_Post_Classes {
 		?>
 		<div class="wrap cmb2-options-page <?php echo esc_attr( $this->key ); ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<p><?php _e( 'The following are the options, choices, and respective classes that this plugin has been configured with.', '' ); ?></p>
+			<dl>
 			<?php
 				$options = apply_filters( 'developer_driven_custom_post_classes_options', array() );
-				$options = clean_options( $options );
+				$options = $this->clean_options( $options );
 				foreach ( $options as $option ) {
+					printf(
+						'<dt>%1$s</dt>',
+						$option['description']
+					);
+					echo '<dd><ul>';
+					foreach ( $option['options'] as $class => $display_text ) {
+						printf(
+							'<li>%1$s: <code>%2$s</code></li>',
+							$display_text,
+							$class
+						);
+					}
+					echo '</ul></dd>';
 					// dl of options
 					// dt for option
 					// dd for description
 					// dd of ul/li for class => description
 				}
 			?>
+			</dl>
 		</div>
 		<?php
 	}
@@ -149,8 +165,8 @@ class DDCPC_Custom_Post_Classes {
 
 			if (
 				empty( $option['options'] ) ||
-				empty( $option['description'] ||
-				empty( $option['name']
+				empty( $option['description'] ) ||
+				empty( $option['name'] )
 			) {
 				// to do: error log of some sort for this item so that we don't get devs going WTF
 				unset( $options[$key] );
