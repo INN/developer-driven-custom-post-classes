@@ -81,11 +81,25 @@ class DDCPC_Editor_Metabox {
 		// get the options and clean them
 		$options = DDCPC_Custom_Post_Classes::clean_options( apply_filters( 'developer_driven_custom_post_classes_options', array() ) );
 
+		// set up a group field to stuff all these options under one ID?
+		$group_id = $cmb->add_field( array(
+			'id'          => $this->prefix . '-group',
+			'type'        => 'group',
+			'description' => esc_html__( 'All the form options', 'cmb2' ),
+			'options'     => array(
+				'group_title'   => esc_html__( 'Entry {#}', 'cmb2' ), // {#} gets replaced by row number
+				'add_button'    => esc_html__( 'Add Another Entry', 'cmb2' ),
+				'remove_button' => esc_html__( 'Remove Entry', 'cmb2' ),
+				'sortable'      => true, // beta
+				// 'closed'     => true, // true to have the groups closed by default
+			),
+		) );
+
 		// here, we need to loop over the items returned by the array and then do the add_field option
 		foreach ( $options as $option ) {
-			$cmb->add_field( array(
+			$cmb->add_group_field( $group_id, array(
 				'name' => $option['description'],
-				'id' => $this->prefix . '-' . $option['name'],
+				'id' => $option['name'],
 				'type' => 'select',
 				'options' => array_merge(
 					$option['options'],
