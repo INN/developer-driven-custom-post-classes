@@ -327,6 +327,7 @@ final class Dev_Driven_Cstm_Post_Classes {
 			case 'url':
 			case 'path':
 			case 'admin_page':
+			case 'metabox':
 				return $this->$field;
 			default:
 				throw new Exception( 'Invalid ' . __CLASS__ . ' property: ' . $field );

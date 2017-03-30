@@ -127,6 +127,7 @@ class DDCPC_Custom_Post_Classes {
 			<?php
 				$orig_options = $options = apply_filters( 'developer_driven_custom_post_classes_options', array() );
 				$options = $this->clean_options( $options );
+
 				foreach ( $options as $option ) {
 					printf(
 						'<dt>%1$s</dt>',
@@ -172,7 +173,7 @@ class DDCPC_Custom_Post_Classes {
 	 * @return Array
 	 * @since 0.1.1
 	 */
-	public function clean_options( $options = array() ) {
+	public static function clean_options( $options = array() ) {
 		foreach ( $options as $key => $option ) {
 			$option['description'] = esc_html( $option['description'] );
 			$option['name'] = esc_attr( $option['name'] );

@@ -78,18 +78,21 @@ class DDCPC_Editor_Metabox {
 			'priority'     => 'low',
 		) );
 
-		// here, we need to loop over the items returned by the array and then do the add_field option
-		$cmb->add_field( array(
-			'name' => __( 'Vertical Alignment', 'developer-driven-custom-post-classes' ),
-			'id' => $this->prefix . 'vert-alignment',
-			'type' => 'select',
-			'options' => array(
-				'top' => __( 'top', 'developer-driven-custom-post-classes' ),
-				'middle' => __( 'middle', 'developer-driven-custom-post-classes' ),
-				'bottom' => __( 'bottom', 'developer-driven-custom-post-classes' ),
-			),
-		) );
+		// get the options and clean them
+		$options = DDCPC_Custom_Post_Classes::clean_options( apply_filters( 'developer_driven_custom_post_classes_options', array() ) );
 
+		// here, we need to loop over the items returned by the array and then do the add_field option
+		foreach ( $options as $option ) {
+			$cmb->add_field( array(
+				'name' => $option['description'],
+				'id' => $this->prefix . '-' . $option['name'],
+				'type' => 'select',
+				'options' => array_merge(
+					$option['options'],
+					array( '' => __( 'None', 'developer-driven-custom-post-classes' ) )
+				)
+			) );
+		}
 	}
 
 }
