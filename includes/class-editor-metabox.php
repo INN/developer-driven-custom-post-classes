@@ -83,7 +83,7 @@ class DDCPC_Editor_Metabox {
 
 		// set up a group field to stuff all these options under one ID?
 		$group_id = $cmb->add_field( array(
-			'id'          => $this->prefix . '-group',
+			'id'          => $this->prefix . '-classes',
 			'type'        => 'group',
 			'description' => esc_html__( 'All the form options', 'cmb2' ),
 			'options'     => array(
