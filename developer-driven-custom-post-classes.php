@@ -120,7 +120,15 @@ final class Dev_Driven_Cstm_Post_Classes {
 	 * @since0.1.1
 	 * @var DDCPC_Custom_Post_Classes
 	 */
-	protected $custom_post_classes;
+	protected $admin_page;
+
+	/**
+	 * Instance of DDCPC_Editor_Metabox
+	 *
+	 * @since0.1.1
+	 * @var DDCPC_Editor_Metabox
+	 */
+	protected $metabox;
 
 	/**
 	 * Creates or returns an instance of this class.
@@ -154,7 +162,8 @@ final class Dev_Driven_Cstm_Post_Classes {
 	 */
 	public function plugin_classes() {
 
-		$this->custom_post_classes = new DDCPC_Custom_Post_Classes( $this );
+		$this->admin_page = new DDCPC_Custom_Post_Classes( $this );
+		$this->metabox = new DDCPC_Editor_Metabox( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
@@ -317,7 +326,7 @@ final class Dev_Driven_Cstm_Post_Classes {
 			case 'basename':
 			case 'url':
 			case 'path':
-			case 'custom_post_classes':
+			case 'admin_page':
 				return $this->$field;
 			default:
 				throw new Exception( 'Invalid ' . __CLASS__ . ' property: ' . $field );
