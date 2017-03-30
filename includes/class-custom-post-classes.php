@@ -6,10 +6,9 @@
  * @package Developer_Driven_Custom_Post_Classes
  */
 
-require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';
-
 /**
- * Developer-Driven Custom Post Classes class.
+ * Developer-Driven Custom Post Classes admin page class
+ *
  *
  * @since 0.1.1
  */
