@@ -38,3 +38,7 @@ If an item is in the uninterpreted options array but not in the interpreted arra
 - `'options'` is an array of key-value pairs.
 - In the `'options'` array, each key is a string that is saved in the database. This string is also the CSS class. It should not be localized. If after being run through `esc_attr()` this string is empty, this class option will not be presented to the user.
 - In the `'options'` array, each value is a string that is formatted for display to the user. This can be localized. If after being run through `esc_html()` this string is empty, this class option will not be presented to the user.
+
+## Why classes in the database aren't outputting to the post_class
+
+Developer-Driven Custom Post Classes is designed to be responsive to changes in the array of options provided through the `developer_driven_custom_post_classes_options` filter. For that reason, it checks to see if the classes saved in the post meta are classes that are currently available in the options array, and if the name of the group of classes is still in the options array. If a class is removed from the developer-provided list of options, DDCPC will not output the CSS class on the `post_class` filter, to avoid potential CSS conflicts. If a group of classes is removed from the developer-provided list of options, DDCPC will not output the CSS class chosen from that group. This is done to prevent frontend display issues when the developer-provided options change.
