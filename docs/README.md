@@ -1,4 +1,9 @@
-# How to add theme compatibility for this plugin
+## Index
+
+- This README
+- [Complete List of Filters](./filters.md)
+
+## How to add theme compatibility for this plugin
 
 Add a filtering function on the `developer_driven_custom_post_classes_options` action, accepting an array as an argument and returning an array. Here's an example filter:
 
