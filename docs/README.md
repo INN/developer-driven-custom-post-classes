@@ -1,7 +1,16 @@
 ## Index
 
 - This README
+	- Installation process
+	- How to add theme compatibility for this plugin
+	- Why classes in the database aren't outputting to the post_class
 - [Complete List of Filters](./filters.md)
+
+## Installation process
+
+1. Ensure that your WordPress installation has an active theme or plugin that has a filter on the `developer_driven_custom_post_classes_options` hook that provides a properly-formatted option array.
+2. Download and enable the plugin.
+3. Under Tools > Developer-Driven Custom Post Classes, verify that the options available are the ones presented in the filter. If they are not, enable `WP_DEBUG` to see what the options array looks like before DDCPC sanitized it, and read the detailed instructions under "How to add theme compatibility for this plugin" for additional formatting details.
 
 ## How to add theme compatibility for this plugin
 
@@ -42,3 +51,18 @@ If an item is in the uninterpreted options array but not in the interpreted arra
 ## Why classes in the database aren't outputting to the post_class
 
 Developer-Driven Custom Post Classes is designed to be responsive to changes in the array of options provided through the `developer_driven_custom_post_classes_options` filter. For that reason, it checks to see if the classes saved in the post meta are classes that are currently available in the options array, and if the name of the group of classes is still in the options array. If a class is removed from the developer-provided list of options, DDCPC will not output the CSS class on the `post_class` filter, to avoid potential CSS conflicts. If a group of classes is removed from the developer-provided list of options, DDCPC will not output the CSS class chosen from that group. This is done to prevent frontend display issues when the developer-provided options change.
+
+To check what classes are saved in the post meta table for a given post, find the `_ddcpc_option-classes` meta_key for the post. It will be a serialized array of the following form:
+
+```php
+array (
+  0 => 
+  array (
+    'vert-alignment' => 'middle',
+    'horiz-alignment' => 'center',
+    'color-option' => 'light',
+  ),
+)
+```
+
+Options are stored in the array in the format `'name' => 'class'`, where `'name'` is the name of the option as set in the options array filter and `'class'` is the CSS class chosen for that option.
