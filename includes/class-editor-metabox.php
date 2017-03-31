@@ -1,6 +1,6 @@
 <?php
 /**
- * Developer-Driven Custom Post Clases Metaboxes classes and functions
+ * Developer-Driven Custom Post Classes Metaboxes classes and functions
  *
  * @since 0.1.1
  * @package Developer_Driven_Custom_Post_Classes
@@ -9,7 +9,8 @@
 require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';
 
 /**
- * Developer-Driven Custom Post Clases Metaboxes classes and functions
+ * Developer-Driven Custom Post Classes Metaboxes classes and functions
+ * This also contains the post_class filter
  *
  * @since 0.1.1
  * @package Developer_Driven_Custom_Post_Classes
@@ -24,11 +25,18 @@ class DDCPC_Editor_Metabox {
 	protected $plugin = null;
 
 	/**
-	 * The post meta where things are saved by the metabox
+	 * The prefix common to things in this plugin
 	 *
 	 * @since 0.1.1
 	 */
 	protected $prefix = '_ddcpc_option';
+
+	/**
+	 * The prefix common to things in this plugin
+	 *
+	 * @since 0.1.1
+	 */
+	protected $meta_key = '';
 
 	/**
 	 * Constructor.
@@ -39,6 +47,7 @@ class DDCPC_Editor_Metabox {
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
+		$this->meta_key = $this->prefix . '-classes';
 		$this->hooks();
 	}
 
@@ -50,8 +59,8 @@ class DDCPC_Editor_Metabox {
 	public function hooks() {
 
 		// Hook in our actions to the admin.
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'cmb2_init', array( $this, 'ddcpc_metabox' ) );
+		add_action( 'post_class', array( $this, 'post_classes' ) );
 	}
 
 	/**
@@ -83,7 +92,7 @@ class DDCPC_Editor_Metabox {
 
 		// set up a group field to stuff all these options under one ID?
 		$group_id = $cmb->add_field( array(
-			'id'          => $this->prefix . '-classes',
+			'id'          => $this->meta_key,
 			'type'        => 'group',
 			'description' => esc_html__( 'All the form options', 'cmb2' ),
 			'options'     => array(
@@ -107,6 +116,58 @@ class DDCPC_Editor_Metabox {
 				)
 			) );
 		}
+	}
+
+	/**
+	 * bind the classes to the post
+	 *
+	 * @since 0.1.1
+	 * @filter post_class
+	 */
+	public function post_classes( $post_classes, $class = '', $post_id = null ) {
+		$post_id = is_numeric( $post_id ) ? $post_id : get_the_ID();
+
+		// get the saved values
+		// key => value is 'option name from the filter' => 'selected css class'
+		$meta = get_post_meta( $post_id, $this->meta_key, true );
+
+		// get the currently-defined options and clean them
+		$options = DDCPC_Custom_Post_Classes::clean_options( apply_filters( 'developer_driven_custom_post_classes_options', array() ) );
+
+		/**
+		 * If an option name in the saved post meta does not exist in the current options array,
+		 * remove it and its class from the array of classes that will be output to the page.
+		 */
+		foreach ( $meta[0] as $key => $class ) {
+			if ( false && ! in_array( $key, $options ) ) {
+				unset( $meta[0][$key] );
+			}
+		}
+
+		/**
+		 * If a class in the saved post meta does not exist in the current options array,
+		 * remove it from the list of arrays that will be output to the page.
+		 *
+		 * This uses the same foreach loop, but comes after the option-name loop so that
+		 * it runs a more-complex operation on a potentially-smaller array.
+		 */
+		foreach ( $meta[0] as $key => $class ) {
+			$check = false;
+			foreach ( $options as $option ) {
+				if ( array_key_exists( $class , $option['options'] ) ) {
+					$check = true;
+				}
+			}
+			if ( ! $check ) {
+				unset( $meta[0][$key] );
+			}
+		}
+
+		foreach ( $meta[0] as $class ) {
+			$post_classes[] = $class;
+		}
+
+		return $post_classes;
 	}
 
 }
