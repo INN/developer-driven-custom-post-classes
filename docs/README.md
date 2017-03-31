@@ -5,7 +5,7 @@
 
 ## How to add theme compatibility for this plugin
 
-Add a filtering function on the `developer_driven_custom_post_classes_options` action, accepting an array as an argument and returning an array. Here's an example filter:
+Add a filtering function on the `developer_driven_custom_post_classes_options` filter, accepting an array as an argument and returning an array. Here's an example filter:
 
 ```php
 function your_ddcpc_options( $options ) {
@@ -24,7 +24,7 @@ function your_ddcpc_options( $options ) {
 	);
 	return $options;
 }
-add_action( 'developer_driven_custom_post_classes_options', 'your_ddcpc_options' );
+add_filter( 'developer_driven_custom_post_classes_options', 'your_ddcpc_options' );
 ```
 
 To check that you have added the filter correctly, enable this plugin and go to Tools > Developer-Driven Custom Post Classes in the Dashboard. You will see the interpreted list of option groups, their display text, and their css classes. If `WP_DEBUG` is `true`, you will also see the raw, uninterpreted options array.
