@@ -127,6 +127,12 @@ class DDCPC_Editor_Metabox {
 	public function post_classes( $post_classes, $class = '', $post_id = null ) {
 		$post_id = is_numeric( $post_id ) ? $post_id : get_the_ID();
 
+		// provide a way to disable this on specific posts.
+		$abort = apply_filters( 'developer_driven_custom_post_classes_post_class_filter', false, $post_id );
+		if ( $abort ) {
+			return $post_classes;
+		}
+
 		// get the saved values
 		// key => value is 'option name from the filter' => 'selected css class'
 		$meta = get_post_meta( $post_id, $this->meta_key, true );
