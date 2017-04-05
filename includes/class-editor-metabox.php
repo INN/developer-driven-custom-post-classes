@@ -141,6 +141,13 @@ class DDCPC_Editor_Metabox {
 		$options = DDCPC_Custom_Post_Classes::clean_options( apply_filters( 'developer_driven_custom_post_classes_options', array() ) );
 
 		/**
+		 * We cannot add anything if this is not an array of options
+		 */
+		if ( !is_array( $meta[0] ) || empty( $meta[0] ) ) {
+			return $post_classes;
+		}
+
+		/**
 		 * If an option name in the saved post meta does not exist in the current options array,
 		 * remove it and its class from the array of classes that will be output to the page.
 		 */
