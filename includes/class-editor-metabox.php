@@ -60,7 +60,7 @@ class DDCPC_Editor_Metabox {
 
 		// Hook in our actions to the admin.
 		add_action( 'cmb2_init', array( $this, 'ddcpc_metabox' ) );
-		add_action( 'post_class', array( $this, 'post_classes' ) );
+		add_action( 'post_class', array( $this, 'post_classes' ), 10, 3 );
 	}
 
 	/**
