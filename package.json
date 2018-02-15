@@ -1,7 +1,7 @@
 {
 	"name": "developer-driven-custom-post-classes",
 	"title": "Developer-Driven Custom Post Classes",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A metabox allowing users to choose from classes defined by theme developers.",
 	"author": {
 		"name": "The INN Nerds",

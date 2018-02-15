@@ -3,7 +3,7 @@
  * Plugin Name: Developer-Driven Custom Post Classes
  * Plugin URI:  https://github.com/INN/developer-driven-custom-post-classes
  * Description: A metabox allowing users to choose from classes defined by theme developers.
- * Version:     0.1.1
+ * Version:     0.1.2
  * Author:      The INN Nerds
  * Author URI:  https://nerds.inn.org/
  * Donate link: https://nerds.inn.org/
@@ -14,7 +14,7 @@
  * @link    https://nerds.inn.org/
  *
  * @package Dev_Driven_Cstm_Post_Classes
- * @version 0.1.1
+ * @version 0.1.2
  *
  * Built using generator-plugin-wp (https://github.com/WebDevStudios/generator-plugin-wp)
  */
@@ -72,7 +72,7 @@ final class Dev_Driven_Cstm_Post_Classes {
 	 * @var    string
 	 * @since  0.1.1
 	 */
-	const VERSION = '0.1.1';
+	const VERSION = '0.1.2';
 
 	/**
 	 * URL of plugin directory.

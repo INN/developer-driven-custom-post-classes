@@ -4,7 +4,7 @@
 **Tags:**  
 **Requires at least:** 4.4  
 **Tested up to:**      4.7.3  
-**Stable tag:**        0.1.1  
+**Stable tag:**        0.1.2  
 **License:**           GPLv2  
 **License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -27,6 +27,9 @@ A metabox allowing users to choose from classes defined by theme developers.
 
 
 ## Changelog ##
+
+### 0.1.2 ###
+* Fixes bug where post_class filter was outputting wrong post class on archives.
 
 ### 0.1.1 ###
 * First release
